@@ -4,7 +4,7 @@ def square(side):
     area = side ** 2
     return math.ceil(area)
 
-side = int(input("Введите число: "))
+side = float(input("Введите число: "))
 print(square(side))
 
 
