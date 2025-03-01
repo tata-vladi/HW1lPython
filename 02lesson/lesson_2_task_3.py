@@ -1,9 +1,10 @@
 import math
 
-
 def square(side):
     area = side ** 2
     return math.ceil(area)
-print(square(4.4))
+
+side = int(input("Введите число: "))
+print(square(side))
 
 
