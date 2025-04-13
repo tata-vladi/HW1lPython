@@ -1,11 +1,17 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
-# Фикстура для настройки драйвера браузера
+
 @pytest.fixture
 def driver():
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_experimental_option("prefs", {
+        "credentials_enable_service": False,
+        "profile.password_manager_enabled": False
+    })
+    driver = webdriver.Chrome(options=chrome_options)
     driver.maximize_window()
     yield driver
     driver.quit()
@@ -48,7 +54,7 @@ def test_purchase(driver):
 
     first_name_field.send_keys("Татьяна")
     last_name_field.send_keys("Турищева")
-    postal_code_field.send_keys("12345")
+    postal_code_field.send_keys("198324")
 
     continue_button = driver.find_element(By.ID, "continue")
     continue_button.click()

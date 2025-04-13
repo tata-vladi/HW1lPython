@@ -14,7 +14,8 @@ def driver():
 
 
 def test_calculator_result(driver):
-    driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
+    driver.get("https://bonigarcia.dev/selenium-webdriver-java/"
+               "slow-calculator.html")
 
     # Установка задержки
     delay_input = driver.find_element(By.CSS_SELECTOR, "#delay")
@@ -29,7 +30,5 @@ def test_calculator_result(driver):
 
     # Ожидание и проверка результата
     result = WebDriverWait(driver, 46).until(
-        EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".screen"), "15")
-    )
+        EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".screen"), "15"))
     assert driver.find_element(By.CSS_SELECTOR, ".screen").text == "15"
-
