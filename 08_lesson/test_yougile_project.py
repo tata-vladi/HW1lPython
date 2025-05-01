@@ -31,47 +31,8 @@ def test_add_project_not_valid_token():
     assert project.status_code == 401
     assert project.json()["error"] == "Unauthorized"
 
-#метод пут
-
-    def test_add_project_positive(title):
-        # Создаем проект
-        project = api.create_project(title, users_info)
-
-        # Проверяем успешность операции (код статуса 201 — Created)
-        assert project.status_code == 201
-
-        # Получаем ID нового проекта
-        new_id = project.json()["id"]
-
-        # Запрашиваем созданный проект
-        new_project = api.get_project(new_id)
-
-        # Проверяем наличие проекта и правильность названия
-        assert new_project.status_code == 200
-        assert new_project.json()["title"] == title
-
-        # Удаляем проект
-        api.delete_project(new_id)
 
 
-# Негативный тест на попытку создать проект с пустым названием
-def test_add_project_not_valid_title():
-    # Пытаемся создать проект с пустым заголовком
-    project = api.create_project("", users_info)
-
-    # Ожидаем ошибку Bad Request (статус-код 400)
-    assert project.status_code == 400
-    assert project.json()["error"] == "Bad Request"
-
-
-# Негативный тест на попытки создать проект с неверным токеном авторизации
-def test_add_project_not_valid_token():
-    # Используем объект API с некорректными заголовками (невалидный токен)
-    project = api_negative.create_project("", users_info)
-
-    # Ожидаем статус Unauthorized (401)
-    assert project.status_code == 401
-    assert project.json()["error"] == "Unauthorized"
 #метод гет
 # Позитивный тест на получение существующего проекта
 def test_get_existing_project_positive():
@@ -93,8 +54,22 @@ def test_get_existing_project_positive():
 
 # Негативный тест на получение несуществующего проекта
 def test_get_nonexistent_project_negative():
-    # Пытаемся получить проект с заведомо несуществующим id
-    non_existent_project = api.get_project(-1)
+    non_existent_id = "00000000-0000-0000-0000-000000000000"
+    response = api.get_project(non_existent_id)
+    assert response.status_code == 404
 
-    # Ожидаем код Not Found (404)
-    assert non_existent_project.status_code == 404
+
+#метод пут
+
+def test_update_project_positive(setup_project):
+    project_id = setup_project
+    new_title = "Новое название проекта"
+    response = api.update_project(project_id, new_title)
+    assert response.status_code == 200
+    updated_project = api.get_project(project_id)
+    assert updated_project.json()["title"] == new_title
+
+def test_update_project_invalid_data(setup_project):
+    project_id = setup_project
+    response = api.update_project(project_id, "")
+    assert response.status_code == 400
