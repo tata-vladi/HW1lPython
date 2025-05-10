@@ -52,8 +52,8 @@ def test_update_project_positive(create_project):
         "Content-Type": "application/json",
     }
     data = {"title": "Update test title"}
-    resp = requests.put(f'{Base_URL} + projects/{project_id}',
-                        headers=headers, json=data)
+    resp = requests.put(f"{Base_URL}projects/{project_id}"),
+    #headers=headers, json= data)
     assert resp.status_code == 200
 
 
@@ -75,7 +75,7 @@ def test_get_project_positive(create_project):
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
     }
-    resp = requests.put(f'{Base_URL} + projects/{project_id}', headers=headers)
+    resp = requests.get(f'{Base_URL} + projects/{project_id}', headers=headers)
     assert resp.status_code == 200
 
 
@@ -85,5 +85,5 @@ def test_get_project_negative():
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
     }
-    resp = requests.put(f'{Base_URL} + projects/{project_id}', headers=headers)
+    resp = requests.get(f'{Base_URL} + projects/{project_id}', headers=headers)
     assert resp.status_code == 404
