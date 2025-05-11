@@ -25,7 +25,7 @@ class YouGileAPI:
         resp = requests.put(self.url + '/api-v2/projects/' + project_id, headers=self.headers, json=body)
         return resp.status_code
 
-def update_project(self, project_id, new_title):
-    body = {"title": new_title}
-    resp = requests.put(f"{self.url}/api-v2/projects/{project_id}", headers=self.headers, json=body)
-    return resp
+    def update_project(self, project_id, new_title):
+        body = {"title": new_title}
+        resp = requests.put(f"{self.url}/api-v2/projects/{project_id}", headers=self.headers, json=body)
+        return resp
