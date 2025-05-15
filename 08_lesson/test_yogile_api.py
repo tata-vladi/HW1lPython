@@ -58,6 +58,7 @@ def test_update_project_positive(create_project):   #провал
 
 
 
+
 def test_update_project_negative(create_project):
     project_id = "non_existent_project_id"
     headers = {
@@ -86,5 +87,5 @@ def test_get_project_negative():
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
     }
-    resp = requests.put(f'{Base_URL} + projects/{project_id}', headers=headers)
+    resp = requests.get(f'{Base_URL} + projects/{project_id}', headers=headers)
     assert resp.status_code == 404
